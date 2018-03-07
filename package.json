@@ -1,0 +1,16 @@
+
+{
+    "name": "no-name",
+    "version": "0.0.1",
+    "description": "undescribed",
+    "main": "main.js",
+    "bin": {
+    },
+    "scripts": {},
+    "dependencies": {
+        "kit": "git@github.com:riatzukiza/kit.git",
+        "kit-interface": "git@github.com:riatzukiza/kit-interface.git",
+        "kit-repl": "git@github.com:riatzukiza/kit-repl.git",
+        "source-map-support": "^0.4.11"
+    }
+}
