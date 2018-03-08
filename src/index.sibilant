@@ -1,0 +1,73 @@
+(include "kit/header"
+         "kit-interface/header")
+
+(import-namespace kit)
+(import-namespace interface)
+(include "../inc/misc.sibilant")
+
+(include "kit-html/src/dom")
+(import-namespace dom)
+
+(require! dl 'deeplearn)
+
+;; (with-dom Document-body
+;;           (.div .id "main"
+;;                 (.canvas .id "ants")))
+
+(var canvas (.create-element document 'canvas))
+(.append-child document.body canvas)
+
+(var dim [256 256 256 256 ])
+
+(def rgb (r g b ) (lit  r g b ))
+(var red (rgb 255 0 0 ))
+(var running? false)
+
+(define Field Interface
+
+  (init ( color (shape dim) (tensor (dl.ones shape))))
+
+  (def set ([x y] v) (then (this.tensor.data) d (set d (+ (* y (first this.shape))
+                                                          x) v)))
+  (def get ([x y] ) (then (this.tensor.data) d (get d (+ (* y (first this.shape))
+                                                         x))))
+
+  )
+
+(var ants ((create Field) red))
+(def-generic ants.update ()
+
+  (if! (not running?) (return false))
+  (print this.tensor.shape)
+  (var filter (.random-uniform dl [3 3 256 256 ]))
+  (.conv2d this.tensor filter 1 1))
+
+(def-generic ants.render (canvas shape color tensor)
+  (if! (not running?) (return false))
+  (var ctx (.get-context canvas "2d")
+       [height width] tensor.shape)
+
+  (then (tensor.data) d
+
+        (var image-data (new Image-data height width))
+
+        (for! (i 0) (< i (* width height)) (++ i)
+              (var j (* i 4)
+                   k i)
+              (var a (get d i))
+              (set image-data.data
+                   j (Math.round (* color.r a))
+                   (+ j 1)  (Math.round (* color.g a))
+                   (+ j 2) (Math.round (* color.b a))
+                   (+ j 3) (Math.round (/  a 255))))
+        (.put-image-data ctx image-data 0 0)))
+
+
+(.set ants [128 128] 0)
+
+(set-interval (-> (.update ants)
+                  (.render ants canvas)
+                  )
+              0)
+
+(print ants.render)

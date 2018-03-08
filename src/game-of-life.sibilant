@@ -1,0 +1,48 @@
+
+(include "kit/header"
+         "kit-interface/header")
+
+(import-namespace kit)
+(import-namespace interface)
+(include "../inc/misc.sibilant")
+
+(include "kit-html/src/dom")
+(import-namespace dom)
+
+(require! dl 'deeplearn)
+
+;; (with-dom Document-body
+;;           (.div .id "main"
+;;                 (.canvas .id "ants")))
+
+(var canvas (.create-element document 'canvas))
+(.append-child document.body canvas)
+
+(var W 30 H 30)
+
+(var state0 (.zeros dl [ W H]))
+
+(def-curried coord-2d (w [x y]) (+ (* y w) x))
+(var coord (coord-2d W))
+
+(macro await (v)
+       ["await " v])
+(var d (await (state0.data)))
+(pipe (state0.data)
+      (then  s
+             (set s
+                  (coord [2 5]) 1
+                  (coord [3 5]) 1
+                  (coord [4 5]) 1))
+      (then-do
+       (var state (dl.variable
+                   ( dl.cast
+                     ( dl.reshape state0 [1 H W 1])
+                     "float32"))
+            kernel (dl.reshape (dl.ones [3 3])
+                               [3 3 1 1])
+            neighbors (dl.conv2d state kernel [1 1 1 1] "SAME")
+            )
+
+
+       ))

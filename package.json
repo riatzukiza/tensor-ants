@@ -1,16 +1,17 @@
-
 {
     "name": "no-name",
     "version": "0.0.1",
     "description": "undescribed",
     "main": "main.js",
-    "bin": {
-    },
+    "bin": {},
     "scripts": {},
     "dependencies": {
         "kit": "git@github.com:riatzukiza/kit.git",
         "kit-interface": "git@github.com:riatzukiza/kit-interface.git",
         "kit-repl": "git@github.com:riatzukiza/kit-repl.git",
-        "source-map-support": "^0.4.11"
+        "kit-html": "git@github.com:riatzukiza/kit-html.git",
+        "source-map-support": "^0.4.11",
+        "deeplearn": "*",
+        "webgl": "git@bitbucket.org:kettlelogic/andy_webgl.git"
     }
 }
