@@ -12,6 +12,7 @@
         "kit-html": "git@github.com:riatzukiza/kit-html.git",
         "source-map-support": "^0.4.11",
         "deeplearn": "*",
+        "mathjs": "*",
         "webgl": "git@bitbucket.org:kettlelogic/andy_webgl.git"
     }
 }
